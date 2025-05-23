@@ -4,20 +4,14 @@
 #include <dirent.h>
 #include <string.h>
 #include <sys/stat.h>
+#include "../inc/software_bom.h"
+#include <fcntl.h>
 
 #define BUFFER_SIZE 16384
 #define MAX_RECURSION 10
 
-typedef struct FileInformation {
-    char filePath[512];
-    unsigned char fileHash[SHA256_DIGEST_LENGTH];
-} FileInformation;
-
 int sha256_file_evp(const char *filename, FileInformation* fileInfo);
-void print_hash(unsigned char *hash, unsigned int length) {
-    for (unsigned int i = 0; i < length; i++)
-        printf("%02x", hash[i]);    
-}
+
 
 int is_directory(const char *path) {
     struct stat path_stat;
@@ -132,5 +126,8 @@ int main( int argc, char* argv[] ) {
         int ret = get_file_hashes_directory(argv[i],fp,0);
         fclose(fp);
     }
+
+    int fd = 0;
+    fd = open(outputName,O_RDONLY);
     return 0;
 }
