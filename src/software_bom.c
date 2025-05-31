@@ -49,7 +49,7 @@ int get_file_hashes_directory(const char* directory,FILE * fp, int recursion) {
         else if (is_regular_file(fullpath)) {
             FileInformation fileInfo;
             sha256_file_evp(fullpath,&fileInfo);
-            memcpy(fileInfo.filePath,fullpath,strlen(fullpath));            
+            memcpy(fileInfo.filePath,fullpath,strlen(fullpath)+1);//+1 for nul byte       
             unsigned int len = strlen(fileInfo.filePath);
             fwrite(&len,sizeof(unsigned int),1, fp);
             fwrite(fileInfo.filePath,strlen(fileInfo.filePath),1,fp);
