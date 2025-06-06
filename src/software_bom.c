@@ -50,9 +50,9 @@ int get_file_hashes_directory(const char* directory,FILE * fp, int recursion) {
             FileInformation fileInfo;
             sha256_file_evp(fullpath,&fileInfo);
             memcpy(fileInfo.filePath,fullpath,strlen(fullpath)+1);//+1 for nul byte       
-            unsigned int len = strlen(fileInfo.filePath);
+            unsigned int len = strlen(fileInfo.filePath)+1;
             fwrite(&len,sizeof(unsigned int),1, fp);
-            fwrite(fileInfo.filePath,strlen(fileInfo.filePath),1,fp);
+            fwrite(fileInfo.filePath,strlen(fileInfo.filePath)+1,1,fp);
             fwrite(fileInfo.fileHash, SHA256_DIGEST_LENGTH, 1, fp);                        
         }
     }

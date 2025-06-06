@@ -13,7 +13,7 @@ int32_t readBinaryBom(int fd,FileInformation* fInfo) {
     bytesRead = read(fd,&fInfo->filePathLength,4);
     
     if(fInfo->filePathLength > 511) {
-        return -1;
+        return 0;
     }
 
     if(bytesRead == 0) {
